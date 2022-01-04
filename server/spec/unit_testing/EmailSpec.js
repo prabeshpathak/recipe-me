@@ -13,7 +13,7 @@ describe("EmailUtils", function () {
   const EmailVals = {
     id: "605927d16847e332654180c7",
     name: "name",
-    email: "postmaster@Recipe-Me.cc",
+    email: "postmaster@Recipe-Me.com",
   };
 
   // Create a token so we can create a verification code

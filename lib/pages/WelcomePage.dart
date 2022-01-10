@@ -66,7 +66,7 @@ class _WelcomePageState extends State<WelcomePage>
           gradient: LinearGradient(
               colors: [
                 Colors.white,
-                Colors.green.shade200,
+                Colors.blue.shade300,
               ],
               begin: const FractionalOffset(0.0, 1.0),
               end: const FractionalOffset(0.0, 1.0),
@@ -80,7 +80,7 @@ class _WelcomePageState extends State<WelcomePage>
               child: SlideTransition(
                 position: _offsetAnimation,
                 child: Text(
-                  "DevStack",
+                  "Great Recipes",
                   style: TextStyle(
                     fontSize: 38,
                     fontWeight: FontWeight.w600,
@@ -96,7 +96,7 @@ class _WelcomePageState extends State<WelcomePage>
                 children: [
                   SizedBox(height: MediaQuery.of(context).size.height / 6),
                   Text(
-                    "Great stories for great people.",
+                    "Share Your Own",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,

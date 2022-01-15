@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app_flutter/pages/SignUp.dart';
 import 'package:recipe_app_flutter/pages/WelcomePage.dart';
 import "package:google_fonts/google_fonts.dart";
 

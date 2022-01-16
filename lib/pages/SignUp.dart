@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
+import "../NetworkHandler.dart";
 
 class SignUpPage extends StatefulWidget {
-
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -9,6 +9,14 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   bool vis = true;
   final GlobalKey<FormState> _globalkey = GlobalKey<FormState>();
+  NetworkHandler networkHandler = NetworkHandler();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  String? errorText;
+  bool validate = false;
+  bool circular = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,36 +55,71 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
               InkWell(
-                onTap: () {
-                  if (_globalkey.currentState!.validate()) {
-                    // we will send the data to rest server
-                    print("Validated");
-                  }
-                },
-                child: Container(
-                  width: 150,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xff00A86B),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              )
+                  onTap: () async {
+                    setState(() {
+                      circular = true;
+                    });
+                    await checkUser();
+                    if (_globalkey.currentState!.validate() && validate) {
+                      Map<String, String> data = {
+                        "username": _usernameController.text,
+                        "email": _emailController.text,
+                        "password": _passwordController.text,
+                      };
+                      print(data);
+                      networkHandler.post("/user/register", data);
+                    }
+                  },
+                  child: circular
+                      ? CircularProgressIndicator()
+                      : Container(
+                          width: 150,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xff00A86B),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ))
             ],
           ),
         ),
       ),
     );
+  }
+
+  checkUser() async {
+    if (_usernameController.text.length == 0) {
+      setState(() {
+        circular = false;
+        validate = false;
+        errorText = "Username Can't be empty";
+      });
+    } else {
+      var response = await networkHandler
+          .get("/user/checkUsername/${_usernameController.text}");
+      if (response['Status']) {
+        setState(() {
+          circular = false;
+          validate = false;
+          errorText = "Username already taken";
+        });
+      } else {
+        setState(() {
+          circular = false;
+          validate = true;
+        });
+      }
+    }
   }
 
   Widget usernameTextField() {
@@ -86,12 +129,9 @@ class _SignUpPageState extends State<SignUpPage> {
         children: [
           Text("Username"),
           TextFormField(
-            validator: (value) {
-              if (value!.isEmpty) return "Username can't be empty";
-              // username unique is not
-              return null;
-            },
+            controller: _usernameController,
             decoration: InputDecoration(
+              errorText: validate ? null : errorText,
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.black,
@@ -112,6 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
         children: [
           Text("Email"),
           TextFormField(
+            controller: _emailController,
             validator: (value) {
               if (value!.isEmpty) return "Email can't be empty";
               if (!value.contains("@")) return "Email is Invalid";
@@ -138,6 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
         children: [
           Text("Password"),
           TextFormField(
+            controller: _passwordController,
             validator: (value) {
               if (value!.isEmpty) return "Password can't be empty";
               if (value.length < 8) return "Password lenght must have >=8";

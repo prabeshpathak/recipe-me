@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/pages/SignUp.dart';
+import 'SignInPage.dart';
 
 class WelcomePage extends StatefulWidget {
   @override
@@ -134,14 +135,21 @@ class _WelcomePageState extends State<WelcomePage>
                           ),
                         ),
                         SizedBox(width: 10),
-                        Text(
-                          "Sign In",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SignInPage(),
+                            ));
+                          },
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),

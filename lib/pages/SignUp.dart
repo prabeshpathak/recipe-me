@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import "package:flutter/material.dart";
 import "../NetworkHandler.dart";
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'HomePage.dart';
 
 class SignUpPage extends StatefulWidget {
   @override
@@ -16,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   String? errorText;
   bool validate = false;
   bool circular = false;
+  final storage = new FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,42 @@ class _SignUpPageState extends State<SignUpPage> {
                         "password": _passwordController.text,
                       };
                       print(data);
-                      networkHandler.post("/user/register", data);
+                    var responseRegister =
+                        await networkHandler.post("/user/register", data);
+
+                        //Login Logic added here
+                    if (responseRegister.statusCode == 200 ||
+                        responseRegister.statusCode == 201) {
+                      Map<String, String> data = {
+                        "username": _usernameController.text,
+                        "password": _passwordController.text,
+                      };
+                      var response =
+                          await networkHandler.post("/user/login", data);
+
+                      if (response.statusCode == 200 ||
+                          response.statusCode == 201) {
+                        Map<String, dynamic> output =
+                            json.decode(response.body);
+                        print(output["token"]);
+                        await storage.write(
+                            key: "token", value: output["token"]);
+                        setState(() {
+                          validate = true;
+                          circular = false;
+                        });
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomePage(),
+                            ),
+                            (route) => false);
+                      } else {
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text("Netwok Error")));
+                      }
+                    }
+
                     }
                   },
                   child: circular

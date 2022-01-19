@@ -21,8 +21,7 @@ class NetworkHandler {
     log.i(response.statusCode);
   }
 
-  Future<dynamic> post(String url, Map<String, String> body) async {
-    url = formater(url);
+   Future<http.Response> post(String url, Map<String, String> body) async {    url = formater(url);
     log.d(body);
     var response = await http.post(
       Uri.parse(url),
@@ -37,11 +36,7 @@ class NetworkHandler {
       },
       body: json.encode(body),
     );
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      log.i(response.body);
-
-      return response;
-    }
+    return response;
     log.d(response.body);
     log.d(response.statusCode);
   }

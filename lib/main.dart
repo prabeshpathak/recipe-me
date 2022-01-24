@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app_flutter/pages/LoadingPage.dart';
 import 'package:recipe_app_flutter/pages/SignUp.dart';
 import "package:recipe_app_flutter/pages/HomePage.dart";
 import 'package:recipe_app_flutter/pages/WelcomePage.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+ import 'pages/LoadingPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Widget page = WelcomePage();
+  Widget page = LoadingPage();
   final storage = FlutterSecureStorage();
   @override
   void initState() {
@@ -26,7 +28,7 @@ class _MyAppState extends State<MyApp> {
 
   void checkLogin() async {
     String? token = await storage.read(key: "token");
-    if (token == null) {
+    if (token != null) {
       setState(() {
         page = HomePage();
       });

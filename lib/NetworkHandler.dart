@@ -1,17 +1,22 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class NetworkHandler {
-  String baseurl = "https://flutter-server.herokuapp.com";
+  // String baseurl = "https://flutter-server.herokuapp.com";
+  String baseurl = "http://127.0.0.1:5000";
 
   var log = Logger();
-
+   FlutterSecureStorage storage = FlutterSecureStorage();
   Future get(String url) async {
+    String? token = await storage.read(key: "token");
     url = formater(url);
     // /user/register
-    var response = await http.get(Uri.parse(url));
-    print(response.statusCode);
+     var response = await http.get(
+      Uri.parse(url),
+      headers: {"Authorization": "Bearer $token"},
+    );
     if (response.statusCode == 200 || response.statusCode == 201) {
       log.i(response.body);
 
@@ -22,23 +27,28 @@ class NetworkHandler {
   }
 
    Future<http.Response> post(String url, Map<String, String> body) async {    url = formater(url);
-    log.d(body);
-    var response = await http.post(
+     String? token = await storage.read(key: "token");    var response = await http.post(
       Uri.parse(url),
       headers: {
         "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-        "Access-Control-Allow-Credentials":
-            "true", // Required for cookies, authorization headers with HTTPS
-        "Access-Control-Allow-Headers":
-            "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
-        "Access-Control-Allow-Methods": "POST, OPTIONS"
+        "Authorization": "Bearer $token"
       },
       body: json.encode(body),
     );
     return response;
-    log.d(response.body);
-    log.d(response.statusCode);
+  }
+
+    Future<http.StreamedResponse> patchImage(String url, String filepath) async {
+    url = formater(url);
+    String? token = await storage.read(key: "token");
+    var request = http.MultipartRequest('PATCH', Uri.parse(url));
+    request.files.add(await http.MultipartFile.fromPath("img", filepath));
+    request.headers.addAll({
+      "Content-type": "multipart/form-data",
+      "Authorization": "Bearer $token"
+    });
+    var response = request.send();
+    return response;
   }
 
   String formater(String url) {

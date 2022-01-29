@@ -5,7 +5,8 @@ import "package:recipe_app_flutter/pages/HomePage.dart";
 import 'package:recipe_app_flutter/pages/WelcomePage.dart';
 import "package:google_fonts/google_fonts.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
- import 'pages/LoadingPage.dart';
+import 'pages/LoadingPage.dart';
+import 'package:recipe_app_flutter/profile/MainProfile.dart';
 
 void main() {
   runApp(MyApp());
@@ -47,7 +48,7 @@ class _MyAppState extends State<MyApp> {
           Theme.of(context).textTheme,
         ),
       ),
-      home: page,
+      home: MainProfile(),
     );
   }
 }

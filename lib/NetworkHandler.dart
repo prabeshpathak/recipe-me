@@ -1,19 +1,20 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
- import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/cupertino.dart';
 
 class NetworkHandler {
   // String baseurl = "https://flutter-server.herokuapp.com";
   String baseurl = "http://127.0.0.1:5000";
 
   var log = Logger();
-   FlutterSecureStorage storage = FlutterSecureStorage();
+  FlutterSecureStorage storage = FlutterSecureStorage();
   Future get(String url) async {
     String? token = await storage.read(key: "token");
     url = formater(url);
     // /user/register
-     var response = await http.get(
+    var response = await http.get(
       Uri.parse(url),
       headers: {"Authorization": "Bearer $token"},
     );
@@ -26,8 +27,10 @@ class NetworkHandler {
     log.i(response.statusCode);
   }
 
-   Future<http.Response> post(String url, Map<String, String> body) async {    url = formater(url);
-     String? token = await storage.read(key: "token");    var response = await http.post(
+  Future<http.Response> post(String url, Map<String, String> body) async {
+    url = formater(url);
+    String? token = await storage.read(key: "token");
+    var response = await http.post(
       Uri.parse(url),
       headers: {
         "Content-type": "application/json",
@@ -38,7 +41,7 @@ class NetworkHandler {
     return response;
   }
 
-    Future<http.StreamedResponse> patchImage(String url, String filepath) async {
+  Future<http.StreamedResponse> patchImage(String url, String filepath) async {
     url = formater(url);
     String? token = await storage.read(key: "token");
     var request = http.MultipartRequest('PATCH', Uri.parse(url));
@@ -53,5 +56,9 @@ class NetworkHandler {
 
   String formater(String url) {
     return baseurl + url;
+  }
+  NetworkImage getImage(String username) {
+    String url = formater("/uploads//$username.jpg");
+    return NetworkImage(url);
   }
 }

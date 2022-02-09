@@ -33,11 +33,11 @@ class _MainProfileState extends State<MainProfile> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white10,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-          color: Colors.black,
-        ),
+        // leading: IconButton(
+        //   icon: Icon(Icons.arrow_back),
+        //   onPressed: () {},
+        //   color: Colors.black,
+        // ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),

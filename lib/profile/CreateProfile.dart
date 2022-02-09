@@ -1,9 +1,10 @@
 import 'dart:io';
+
 import 'package:recipe_app_flutter/NetworkHandler.dart';
+import 'package:recipe_app_flutter/Pages/HomePage.dart';
+import 'package:recipe_app_flutter/Screen/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recipe_app_flutter/pages/HomePage.dart';
-import 'package:recipe_app_flutter/screen/HomeScreen.dart';
 
 class CreatProfile extends StatefulWidget {
   @override
@@ -21,7 +22,6 @@ class _CreatProfileState extends State<CreatProfile> {
 
   bool circular = false;
   final networkHandler = NetworkHandler();
-
   final _globalkey = GlobalKey<FormState>();
   TextEditingController _name = TextEditingController();
   TextEditingController _profession = TextEditingController();
@@ -232,14 +232,14 @@ class _CreatProfileState extends State<CreatProfile> {
         ),
         labelText: "Name",
         helperText: "Name can't be empty",
-        hintText: "Dev Stack",
+        hintText: "Nam",
       ),
     );
   }
 
   Widget professionTextField() {
     return TextFormField(
-      controller: _name,
+      controller: _profession,
       validator: (value) {
         if (value!.isEmpty) return "Profession can't be empty";
 
@@ -268,7 +268,7 @@ class _CreatProfileState extends State<CreatProfile> {
 
   Widget dobField() {
     return TextFormField(
-      controller: _name,
+      controller: _dob,
       validator: (value) {
         if (value!.isEmpty) return "DOB can't be empty";
 
@@ -297,7 +297,7 @@ class _CreatProfileState extends State<CreatProfile> {
 
   Widget titleTextField() {
     return TextFormField(
-      controller: _name,
+      controller: _title,
       validator: (value) {
         if (value!.isEmpty) return "Title can't be empty";
 
@@ -326,7 +326,7 @@ class _CreatProfileState extends State<CreatProfile> {
 
   Widget aboutTextField() {
     return TextFormField(
-      controller: _name,
+      controller: _about,
       validator: (value) {
         if (value!.isEmpty) return "About can't be empty";
 
@@ -345,7 +345,7 @@ class _CreatProfileState extends State<CreatProfile> {
         )),
         labelText: "About",
         helperText: "Write about yourself",
-        hintText: "I am Dev Stack",
+        hintText: "I am a full stack developer",
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:recipe_app_flutter/profile/CreateProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/NetworkHandler.dart';
+import 'package:recipe_app_flutter/profile/MainProfile.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -21,11 +22,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var response = await networkHandler.get("/profile/checkProfile");
     if (response["status"] == true) {
       setState(() {
-        page = showProfile();
+        page = MainProfile();
       });
     } else {
       setState(() {
-        page = page;
+        page = button();
       });
     }
   }
@@ -33,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: button(),
+      body: page,
     );
   }
 

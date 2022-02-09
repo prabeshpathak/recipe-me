@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 
 class NetworkHandler {
   // String baseurl = "https://flutter-server.herokuapp.com";
-  String baseurl = "http://127.0.0.1:5000";
+  String baseurl = "http://10.0.2.2:5000";
 
   var log = Logger();
   FlutterSecureStorage storage = FlutterSecureStorage();
@@ -58,8 +58,9 @@ class NetworkHandler {
   String formater(String url) {
     return baseurl + url;
   }
+
   NetworkImage getImage(String username) {
-    String url = formater("/uploads//$username.jpg");
+    String url = formater("/uploads/$username.jpg");
     return NetworkImage(url);
   }
 }

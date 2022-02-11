@@ -7,6 +7,7 @@ class AddBlogModel {
   String? coverImage;
   int? count;
   int? share;
+  @JsonKey(name:"_id")
   int? comment;
   String? id;
   String? username;

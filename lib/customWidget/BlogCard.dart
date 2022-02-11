@@ -2,10 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recipe_app_flutter/NetworkHandler.dart';
+import 'package:recipe_app_flutter/model/addBlogModels.dart';
 
 class BlogCard extends StatelessWidget {
   const BlogCard({
     Key? key,
+    required NetworkHandler networkHandler,
+    required AddBlogModel addBlogModel,
   }) : super(key: key);
 
   String? get title => null;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:recipe_app_flutter/CustomWidget/OverlayCard.dart';
-import 'package:recipe_app_flutter/Model/addBlogModels.dart';
+import 'package:recipe_app_flutter/model/addBlogModels.dart';
 import 'package:recipe_app_flutter/NetworkHandler.dart';
 import 'package:recipe_app_flutter/Pages/HomePage.dart';
 import 'package:flutter/material.dart';

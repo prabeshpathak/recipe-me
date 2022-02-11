@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/screen/HomeScreen.dart';
 import 'package:recipe_app_flutter/profile/ProfileScreen.dart';
 
+import '../blog/addBlog.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -52,7 +54,10 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => AddBlog()));
+        },
         child: Text(
           "+",
           style: TextStyle(fontSize: 40),

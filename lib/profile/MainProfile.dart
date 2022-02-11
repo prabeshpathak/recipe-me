@@ -1,6 +1,7 @@
 import 'package:recipe_app_flutter/NetworkHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/model/profileModel.dart';
+import 'package:recipe_app_flutter/blog/Blog.dart';
 
 class MainProfile extends StatefulWidget {
   @override
@@ -60,6 +61,12 @@ class _MainProfileState extends State<MainProfile> {
                 otherDetails("DOB", profileModel.DOB!),
                 Divider(
                   thickness: 0.8,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Blogs(
+                  url:"/profile/getOwnBlogs",
                 ),
               ],
             ),

@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:recipe_app_flutter/CustomWidget/OverlayCard.dart';
+import 'package:recipe_app_flutter/Model/addBlogModels.dart';
+import 'package:recipe_app_flutter/NetworkHandler.dart';
+import 'package:recipe_app_flutter/Pages/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddBlog extends StatefulWidget {
-
   @override
   _AddBlogState createState() => _AddBlogState();
 }
@@ -14,6 +19,7 @@ class _AddBlogState extends State<AddBlog> {
   ImagePicker _picker = ImagePicker();
   late PickedFile _imageFile;
   IconData iconphoto = Icons.image;
+  NetworkHandler networkHandler = NetworkHandler();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +36,23 @@ class _AddBlogState extends State<AddBlog> {
             }),
         actions: <Widget>[
           FlatButton(
-              onPressed: null,
-              child: Text(
-                "Preview",
-                style: TextStyle(fontSize: 18, color: Colors.blue),
-              ))
+            onPressed: () {
+              if (_imageFile.path != null &&
+                  _globalkey.currentState!.validate()) {
+                showModalBottomSheet(
+                  context: context,
+                  builder: ((builder) => OverlayCard(
+                        imagefile: _imageFile,
+                        title: _title.text,
+                      )),
+                );
+              }
+            },
+            child: Text(
+              "Preview",
+              style: TextStyle(fontSize: 18, color: Colors.blue),
+            ),
+          )
         ],
       ),
       body: Form(
@@ -130,7 +148,29 @@ class _AddBlogState extends State<AddBlog> {
 
   Widget addButton() {
     return InkWell(
-      onTap: () {},
+      onTap: () async {
+        if (_imageFile != null && _globalkey.currentState!.validate()) {
+          AddBlogModel addBlogModel =
+              AddBlogModel(body: _body.text, title: _title.text);
+          var response = await networkHandler.post1(
+              "/blogpost/Add", addBlogModel.toJson());
+          print(response.body);
+
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            String id = json.decode(response.body)["data"];
+            var imageResponse = await networkHandler.patchImage(
+                "/blogpost/add/coverImage/$id", _imageFile.path);
+            print(imageResponse.statusCode);
+            if (imageResponse.statusCode == 200 ||
+                imageResponse.statusCode == 201) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                  (route) => false);
+            }
+          }
+        }
+      },
       child: Center(
         child: Container(
           height: 50,

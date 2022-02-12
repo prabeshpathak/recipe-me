@@ -1,5 +1,4 @@
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
-import 'package:recipe_app_flutter/widgets/GoogleSignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
 import 'package:recipe_app_flutter/utils/RouteNames.dart';
@@ -214,39 +213,50 @@ class Login extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               _buildCenter(context),
-              Center(
+              Container(
+                margin: EdgeInsets.only(top: 2),
+                  width: 300,
+                  padding: EdgeInsets.all(15.0),
+                  decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Or, Verify with Fingerprint",
-                    textAlign: TextAlign.center,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.fingerprint_outlined),
-                    iconSize: 100,
-                    onPressed: () async {
-                      var auth =
-                          Provider.of<AuthProvider>(context, listen: false);
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Or, Verify with Fingerprint",
+                        textAlign: TextAlign.center,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.fingerprint_outlined),
+                        iconSize: 70,
+                        onPressed: () async {
+                          var auth =
+                              Provider.of<AuthProvider>(context, listen: false);
 
-                      final isAuthenticate = await LocalAuthApi.authenticate();
-                      print(isAuthenticate);
-                      if (isAuthenticate == true) {
-                        auth.login("prabesh@gmail.com","123123123").then((value) => {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(value['message']))),
-                              Provider.of<UserProvider>(context, listen: false)
-                                  .setUser(value['user']),
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, RouteName.HOME, (_) => false),
-                            });
-                      } else {
-                        return;
-                      }
-                    },
-                  )
-                ],
-              )),
+                          final isAuthenticate =
+                              await LocalAuthApi.authenticate();
+                          print(isAuthenticate);
+                          if (isAuthenticate == true) {
+                            auth
+                                .login("prabesh@gmail.com", "123123123")
+                                .then((value) => {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(value['message']))),
+                                      Provider.of<UserProvider>(context,
+                                              listen: false)
+                                          .setUser(value['user']),
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          RouteName.HOME, (_) => false),
+                                    });
+                          } else {
+                            return;
+                          }
+                        },
+                      )
+                    ],
+                  )),
             ],
           ),
         ),

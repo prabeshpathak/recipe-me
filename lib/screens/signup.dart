@@ -121,6 +121,20 @@ class Signup extends StatelessWidget {
     );
   }
 
+  Widget _buildLoginLink(context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.all(2),
+        shape: const BeveledRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, RouteName.LOGIN);
+      },
+      child: Text('Have an Account?'),
+    );
+  }
+
   void handleSubmit(context) {
     print(_name.text + _email.text + _pass.text);
     Provider.of<AuthProvider>(context, listen: false)
@@ -142,6 +156,20 @@ class Signup extends StatelessWidget {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(error.toString())))
             });
+  }
+
+  Widget _buildForgotPasswordLink(context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.all(10),
+        shape: const BeveledRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, RouteName.FORGOTPASSWORD);
+      },
+      child: Text('Forgot my password'),
+    );
   }
 
   // Function to build and return a form submit button. This is critical to the
@@ -176,7 +204,12 @@ class Signup extends StatelessWidget {
                 SizedBox(height: 10),
                 _buildConfirmPasswordField(),
                 SizedBox(height: 15),
-               
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildLoginLink(context),
+                      _buildForgotPasswordLink(context)
+                    ]),
               ],
               _formKey,
               _buildSubmit(context))),
@@ -203,7 +236,9 @@ class Signup extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[_buildCenter(context)],
+            children: <Widget>[
+              _buildCenter(context),
+            ],
           ),
         ),
       ),

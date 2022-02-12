@@ -7,6 +7,8 @@ import 'package:recipe_app_flutter/widgets/InputBox.dart';
 import 'package:recipe_app_flutter/utils/StringValidator.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/fingerprint.dart';
+
 // Login page class that extends stateless widget because it won't change itself.
 class Login extends StatelessWidget {
   // Form key is important for implementation of the InputBox class and reading the
@@ -210,7 +212,42 @@ class Login extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[_buildCenter(context)],
+            children: <Widget>[
+              _buildCenter(context),
+              Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Or, Verify with Fingerprint",
+                    textAlign: TextAlign.center,
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.fingerprint_outlined),
+                    iconSize: 100,
+                    onPressed: () async {
+                      var auth =
+                          Provider.of<AuthProvider>(context, listen: false);
+
+                      final isAuthenticate = await LocalAuthApi.authenticate();
+                      print(isAuthenticate);
+                      if (isAuthenticate == true) {
+                        auth.login("prabesh@gmail.com","123123123").then((value) => {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(value['message']))),
+                              Provider.of<UserProvider>(context, listen: false)
+                                  .setUser(value['user']),
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, RouteName.HOME, (_) => false),
+                            });
+                      } else {
+                        return;
+                      }
+                    },
+                  )
+                ],
+              )),
+            ],
           ),
         ),
       ),

@@ -99,11 +99,11 @@ function authenticatedActions(router) {
                 author: mongoose.Types.ObjectId(userId),
                 fileName: req.file.filename,
                 discLocation: `${uploadDir}/${req.file.filename}`,
-                uriLocation: `/uploads/${req.file.filename}`
+                uriLocation: `/images/${req.file.filename}`
             });
 
             image.save().then(function(img) {
-                res.json({ image: `/uploads/${req.file.filename}` });
+                res.json({ image: `/images/${req.file.filename}` });
             }).catch(function(error) {
                 res.json({ error: error });
             });

@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/User.dart';
 import 'utils/RouteNames.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   // ignore: invalid_use_of_visible_for_testing_member
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
                 //   accentColor: Colors.grey,
                 // ),
                 theme: ThemeData(
+                    fontFamily: GoogleFonts.poppins().fontFamily,
                     primaryColor: Colors.black,
                     primaryColorBrightness: Brightness.dark,
                     primaryColorLight: Colors.black,

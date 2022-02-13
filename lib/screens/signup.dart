@@ -136,7 +136,6 @@ class Signup extends StatelessWidget {
   }
 
   void handleSubmit(context) {
-    print(_name.text + _email.text + _pass.text);
     Provider.of<AuthProvider>(context, listen: false)
         .signup(_name.text, _email.text, _pass.text)
         .then((value) => {

@@ -8,7 +8,25 @@ import 'package:recipe_app_flutter/widgets/IngredientField.dart';
 import 'package:recipe_app_flutter/widgets/RecipeModal.dart';
 import 'package:recipe_app_flutter/widgets/TagField.dart';
 import 'package:flutter/material.dart';
+import '../utils/fingerprint.dart';
 import 'package:provider/provider.dart';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
+
+sendNotification(String title) {
+  AwesomeNotifications().isNotificationAllowed().then(((value) => {
+        if (!value)
+          {AwesomeNotifications().requestPermissionToSendNotifications()}
+      }));
+
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+    id: 2,
+    channelKey: 'recipeme',
+    title: 'New Recipe Added',
+    body: '$title has been posted to the app.',
+  ));
+}
 
 class CreateView extends StatefulWidget {
   @override
@@ -94,7 +112,8 @@ class CreateViewState extends State<CreateView> {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
+          final isAuthenticate = await LocalAuthApi.authenticate();
           final Map<String, dynamic> recipe = {
             'name': _name.text.trim().capitalizeFirstofEach,
             'ingredients': Ingredient.toIdString(_ingredients.list),
@@ -105,29 +124,34 @@ class CreateViewState extends State<CreateView> {
           };
 
           if (_formKey.currentState?.validate() ?? false) {
-            API().submitRecipe(token, recipe).then((value) => {
-                  if (value['error'] == null)
-                    {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return RecipeModal(recipe: Recipe.fromJson(value));
-                          }),
-                      setState(() {
-                        _name.clear();
-                        _directions.clear();
-                        _ingredients.clear();
-                        _image.clear();
-                        _tags.clear();
-                        _currentSliderValue = 2;
-                      })
-                    }
-                  else
-                    {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text(value['error'])))
-                    }
-                });
+            if (isAuthenticate == true) {
+              API().submitRecipe(token, recipe).then((value) => {
+                    if (value['error'] == null)
+                      {
+                        sendNotification(value['name']),
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return RecipeModal(
+                                  recipe: Recipe.fromJson(value));
+                            }),
+
+                        setState(() {
+                          _name.clear();
+                          _directions.clear();
+                          _ingredients.clear();
+                          _image.clear();
+                          _tags.clear();
+                          _currentSliderValue = 2;
+                        })
+                      }
+                    else
+                      {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(value['error'])))
+                      }
+                  });
+            }
           }
         },
         child: Text('Submit'),

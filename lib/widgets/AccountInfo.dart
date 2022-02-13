@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:recipe_app_flutter/utils/API.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
 import 'package:recipe_app_flutter/utils/RouteNames.dart';
@@ -5,6 +7,25 @@ import 'package:recipe_app_flutter/utils/UserProvider.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
+
+sendNotification() {
+  AwesomeNotifications().isNotificationAllowed().then(((value) => {
+        if (!value)
+          {AwesomeNotifications().requestPermissionToSendNotifications()}
+      }));
+
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+    id: 4,
+    channelKey: 'recipeme',
+    title: 'Successfully Logged In',
+    body: 'Welcome here, You are now logged in.',
+  ));
+}
+
 
 class AccountInfo extends StatefulWidget {
   @override
@@ -12,6 +33,39 @@ class AccountInfo extends StatefulWidget {
 }
 
 class AccountInfoState extends State<AccountInfo> {
+  List<double>? _accelerometerValues;
+
+  final _streamSubscriptions = <StreamSubscription<dynamic>>[];
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (final subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _streamSubscriptions.add(
+      accelerometerEvents.listen(
+        (AccelerometerEvent event) {
+          if (event.x > 7) {
+            // logout user
+            AuthProvider auth =
+                Provider.of<AuthProvider>(context, listen: false);
+            auth.logout();
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('Logged out')));
+            Navigator.pushNamedAndRemoveUntil(
+                context, RouteName.LANDING, (_) => false);
+          }
+        },
+      ),
+    );
+  }
+
   Widget _buildLogoutButton(context) {
     AuthProvider auth = Provider.of<AuthProvider>(context);
 
@@ -22,6 +76,7 @@ class AccountInfoState extends State<AccountInfo> {
             .showSnackBar(SnackBar(content: Text('Logged out')));
         Navigator.pushNamedAndRemoveUntil(
             context, RouteName.LANDING, (_) => false);
+        sendNotification();
       },
       child: Text('Logout'),
     );
@@ -66,9 +121,10 @@ class AccountInfoState extends State<AccountInfo> {
                               foregroundColor: Colors.white,
                               backgroundColor:
                                   Theme.of(context).colorScheme.primary,
-                              child: Text(
-                                  data['display'].toString().toUpperCase().substring(0, 2)),
-                                  
+                              child: Text(data['display']
+                                  .toString()
+                                  .toUpperCase()
+                                  .substring(0, 2)),
                             ),
                       SizedBox(
                         width: 10,
@@ -98,8 +154,9 @@ class AccountInfoState extends State<AccountInfo> {
                     ],
                   ),
                   Text(data['email'],
-                      style:
-                          TextStyle(fontSize: 16, color: Color.fromARGB(255, 190, 186, 186))),
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 190, 186, 186))),
                   SizedBox(
                     height: 8,
                   ),
@@ -148,7 +205,8 @@ class AccountInfoState extends State<AccountInfo> {
                                     ? ' Liked Recipe'
                                     : ' Liked Recipes',
                                 style: TextStyle(
-                                    fontSize: 18, color: Color.fromARGB(255, 190, 186, 186))),
+                                    fontSize: 18,
+                                    color: Color.fromARGB(255, 190, 186, 186))),
                           ],
                         ),
                       ),
@@ -166,7 +224,8 @@ class AccountInfoState extends State<AccountInfo> {
                                     ? ' Created Recipe'
                                     : ' Created Recipes',
                                 style: TextStyle(
-                                    fontSize: 18, color: Color.fromARGB(255, 190, 186, 186))),
+                                    fontSize: 18,
+                                    color: Color.fromARGB(255, 190, 186, 186))),
                           ],
                         ),
                       ),

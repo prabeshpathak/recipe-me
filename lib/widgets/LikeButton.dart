@@ -5,6 +5,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+
+sendNotification() {
+  AwesomeNotifications().isNotificationAllowed().then(((value) => {
+        if (!value)
+          {AwesomeNotifications().requestPermissionToSendNotifications()}
+      }));
+
+  AwesomeNotifications().createNotification(
+      content: NotificationContent(
+    id: 3,
+    channelKey: 'recipeme',
+    title: 'Tapped On Favourite',
+    body: 'Please view your favourite recipes for update!',
+  ));
+}
 
 class RecipeLikeButton extends StatefulWidget {
   final Recipe recipe;
@@ -47,10 +63,11 @@ class RecipeLikeButtonState extends State<RecipeLikeButton> {
         size: 30,
         likeCountAnimationDuration: Duration(milliseconds: 200),
         onTap: (value) {
-          if (liking)
+          if (liking) {
             return Future.value(value);
-          else {
+          } else {
             liking = true;
+            sendNotification();
             return _toggleLike(token, value);
           }
         },

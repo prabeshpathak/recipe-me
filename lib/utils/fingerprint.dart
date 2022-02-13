@@ -35,7 +35,6 @@ class LocalAuthApi {
           androidAuthStrings: androidStrings,
           stickyAuth: true);
     } on PlatformException catch (e) {
-      print(e);
       return false;
     }
   }

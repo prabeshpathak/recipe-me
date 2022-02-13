@@ -9,31 +9,32 @@ class UserPreference {
   }
 
   Future<bool> saveUser(User user) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userId', user.userId);
-    prefs.setString('name', user.name);
-    prefs.setBool('verified', user.verified);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('userId', user.userId);
+    await prefs.setString('name', user.name);
+    await prefs.setBool('verified', user.verified);
 
-    return prefs.setString('token', user.token);
+    print(prefs.containsKey('userId'));
+    return await prefs.setString('token', user.token);
   }
 
   Future<User> getUser() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final prefs = await SharedPreferences.getInstance();
 
-    String userId = prefs.getString('userId') ?? 'null';
-    String name = prefs.getString('name') ?? 'null';
-    String token = prefs.getString('token') ?? 'null';
-    bool verified = prefs.getBool('verified') ?? false;
-
+    final String userId = prefs.getString('userId') ?? 'null';
+    final String name = prefs.getString('name') ?? 'null';
+    final String token = prefs.getString('token') ?? 'null';
+    final bool verified = prefs.getBool('verified') ?? false;
+    print(prefs.containsKey('userId'));
     return User(userId: userId, name: name, token: token, verified: verified);
   }
 
   void removeUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('userId');
-    prefs.remove('name');
-    prefs.remove('token');
-    prefs.remove('verified');
+    await prefs.remove('userId');
+    await prefs.remove('name');
+    await prefs.remove('token');
+    await prefs.remove('verified');
   }
 
   Future<String> getToken() async {

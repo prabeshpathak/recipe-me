@@ -163,7 +163,6 @@ class AuthProvider with ChangeNotifier {
   // API call to login a user and save login info.
   Future<Map<String, dynamic>> login(String email, String password) async {
     var result;
-    print(email + password + "asdfdsffa");
     _loggedInStatus = Status.Authenticating;
     notifyListeners();
 
@@ -172,7 +171,6 @@ class AuthProvider with ChangeNotifier {
           await API().doLogin(email, password);
       result = authLogin(responseData);
     } catch (on, stacktrace) {
-      print(stacktrace.toString());
       result = {'status': false, 'message': stacktrace.toString()};
     }
 
@@ -205,13 +203,10 @@ class AuthProvider with ChangeNotifier {
     _registeredStatus = Status.Registering;
     _loggedInStatus = Status.NotLoggedIn;
     notifyListeners();
-    print('here');
     try {
-      print('here-success');
 
       final Map<String, dynamic> responseData =
           await API().doSignup(name, email, password);
-      print(responseData);
 
       switch (responseData['code']) {
         case 200:
@@ -231,7 +226,6 @@ class AuthProvider with ChangeNotifier {
           result = {'status': false, 'message': responseData['error']};
       }
     } catch (on, stacktrace) {
-      print('here-atuh');
       _verificationStatus = Status.NotVerified;
       _registeredStatus = Status.NotRegistered;
       _loggedInStatus = Status.NotLoggedIn;

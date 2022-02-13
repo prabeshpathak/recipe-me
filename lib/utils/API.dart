@@ -269,7 +269,6 @@ class API {
     );
 
     Map<String, dynamic> responseData = jsonDecode(response.body);
-    print(responseData);
     responseData['code'] = response.statusCode;
     return responseData;
   }
@@ -282,7 +281,6 @@ class API {
       'email': email,
       'password': password
     };
-    print(signupData);
 
     final response = await http.post(
       Uri.http(API.baseURL, API.signup),
@@ -291,7 +289,6 @@ class API {
     );
 
     Map<String, dynamic> responseData = jsonDecode(response.body);
-    print(responseData);
     responseData['code'] = response.statusCode;
     return responseData;
   }

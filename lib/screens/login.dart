@@ -7,6 +7,25 @@ import 'package:recipe_app_flutter/utils/StringValidator.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/fingerprint.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+
+sendNotification() {
+  AwesomeNotifications().isNotificationAllowed().then(((value) => {
+        if (!value)
+          {AwesomeNotifications().requestPermissionToSendNotifications()}
+      }));
+
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+        id: 1,
+        channelKey: 'recipeme',
+        title: 'Successfully Logged In',
+        body: 'Welcome, You are now logged in.',
+        notificationLayout: NotificationLayout.BigPicture,
+        bigPicture:
+            'https://images.idgesg.net/images/article/2019/01/android-q-notification-inbox-100785464-large.jpg?auto=webp&quality=85,70'),
+  );
+}
 
 // Login page class that extends stateless widget because it won't change itself.
 class Login extends StatelessWidget {
@@ -107,6 +126,7 @@ class Login extends StatelessWidget {
         .then((value) => {
               if (value['status'] == true)
                 {
+                  sendNotification(),
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text(value['message']))),
                   Provider.of<UserProvider>(context, listen: false)
@@ -214,7 +234,7 @@ class Login extends StatelessWidget {
             children: <Widget>[
               _buildCenter(context),
               Container(
-                margin: EdgeInsets.only(top: 2),
+                  margin: EdgeInsets.only(top: 2),
                   width: 300,
                   padding: EdgeInsets.all(15.0),
                   decoration: BoxDecoration(
@@ -236,11 +256,11 @@ class Login extends StatelessWidget {
 
                           final isAuthenticate =
                               await LocalAuthApi.authenticate();
-                          print(isAuthenticate);
                           if (isAuthenticate == true) {
                             auth
                                 .login("prabesh@gmail.com", "123123123")
                                 .then((value) => {
+                                      sendNotification(),
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(value['message']))),

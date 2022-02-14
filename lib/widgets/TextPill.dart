@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextPill extends StatelessWidget {
   final String text;
   final double size;
-  const TextPill(this.text, {this.size = 14});
+  const TextPill(this.text, {this.size = 10});
 
   @override
   Widget build(BuildContext context) {

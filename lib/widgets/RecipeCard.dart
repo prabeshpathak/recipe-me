@@ -84,7 +84,6 @@ class RecipeCardState extends State<RecipeCard> with TickerProviderStateMixin {
         });
         return false;
       } else {
-        print(Recipe.fromJson(response));
         setState(() {
           _recipe = Recipe.fromJson(response);
         });

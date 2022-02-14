@@ -1,3 +1,4 @@
+
 import 'package:recipe_app_flutter/models/Recipe.dart';
 import 'package:recipe_app_flutter/models/User.dart';
 import 'package:recipe_app_flutter/utils/API.dart';
@@ -17,6 +18,7 @@ class RecipeModal extends StatefulWidget {
 }
 
 class RecipeModalState extends State<RecipeModal> {
+  
   Widget _deleteButton(context) {
     User user = Provider.of<UserProvider>(context).user;
     if (user.userId.compareTo(widget.recipe.authorId) == 0)

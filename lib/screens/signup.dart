@@ -1,5 +1,5 @@
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
-import 'package:recipe_app_flutter/utils/RouteNames.dart';
+import 'package:recipe_app_flutter/utils/exportRoutes.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
 import 'package:recipe_app_flutter/widgets/GoogleSignIn.dart';
 import 'package:flutter/material.dart';

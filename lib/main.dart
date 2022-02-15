@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/User.dart';
-import 'utils/RouteNames.dart';
+import 'utils/exportRoutes.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
@@ -37,8 +37,6 @@ void main() async {
   runApp(MyApp());
 }
 
-
-
 Map<int, Color> color = {
   50: Color.fromRGBO(13, 15, 16, .1),
   100: Color.fromRGBO(13, 15, 16, .2),
@@ -52,8 +50,8 @@ Map<int, Color> color = {
   900: Color.fromRGBO(13, 15, 16, 1),
 };
 
-void getnn() async{
-  final pref  = await SharedPreferences.getInstance();
+void getnn() async {
+  final pref = await SharedPreferences.getInstance();
   final String? user = pref.getString('userId');
   print(user);
 }

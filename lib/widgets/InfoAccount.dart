@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:recipe_app_flutter/utils/BaseAPI.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
-import 'package:recipe_app_flutter/utils/RouteNames.dart';
+import 'package:recipe_app_flutter/utils/exportRoutes.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,6 @@ sendNotification() {
     body: 'Welcome here, You are now logged in.',
   ));
 }
-
 
 class AccountInfo extends StatefulWidget {
   @override
@@ -51,7 +50,7 @@ class AccountInfoState extends State<AccountInfo> {
     _streamSubscriptions.add(
       accelerometerEvents.listen(
         (AccelerometerEvent event) {
-          if (event.x > 12) {
+          if (event.x > 10) {
             // logout user
             AuthProvider auth =
                 Provider.of<AuthProvider>(context, listen: false);

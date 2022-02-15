@@ -1,7 +1,7 @@
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
-import 'package:recipe_app_flutter/utils/RouteNames.dart';
+import 'package:recipe_app_flutter/utils/exportRoutes.dart';
 import 'package:recipe_app_flutter/widgets/InputBox.dart';
 import 'package:recipe_app_flutter/utils/StringValidator.dart';
 import 'package:provider/provider.dart';
@@ -16,15 +16,16 @@ sendNotification() {
       }));
 
   AwesomeNotifications().createNotification(
-    content: NotificationContent(
-        id: 1,
-        channelKey: 'recipeme',
-        title: 'Successfully Logged In',
-        body: 'Welcome, You are now logged in.',
-        notificationLayout: NotificationLayout.BigPicture,
-        bigPicture:
-            'https://images.idgesg.net/images/article/2019/01/android-q-notification-inbox-100785464-large.jpg?auto=webp&quality=85,70'),
-  );
+      content: NotificationContent(
+    id: 1,
+    channelKey: 'recipeme',
+    title: 'Successfully Logged In',
+    body: 'Welcome, You are now logged in.',
+    notificationLayout: NotificationLayout.BigPicture,
+    bigPicture:
+        'https://d2vrvpw63099lz.cloudfront.net/live-chat-notifications/notification-workflows.png',
+  ) // optional, if not set, will use the default image'),
+      );
 }
 
 // Login page class that extends stateless widget because it won't change itself.

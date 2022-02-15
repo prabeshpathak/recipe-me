@@ -140,7 +140,7 @@ class RecipeCardState extends State<RecipeCard> with TickerProviderStateMixin {
                 children: [
                   Container(
                       width: 500,
-                      height: 200,
+                      height: 180,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(8.0)),
                           image: (_recipe.image.compareTo('') != 0)

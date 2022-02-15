@@ -2,7 +2,7 @@ import 'package:recipe_app_flutter/models/User.dart';
 import 'package:recipe_app_flutter/screens/mainLanding.dart';
 import 'package:recipe_app_flutter/utils/BaseAPI.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
-import 'package:recipe_app_flutter/utils/RouteNames.dart';
+import 'package:recipe_app_flutter/utils/exportRoutes.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
 import 'package:recipe_app_flutter/widgets/InputBox.dart';
 import 'package:flutter/material.dart';

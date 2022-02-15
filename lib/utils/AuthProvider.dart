@@ -1,7 +1,3 @@
-// AuthProvider
-// CODE AND INSPIRATION FROM
-// https://medium.com/@afegbua/flutter-thursday-13-building-a-user-registration-and-login-process-with-provider-and-external-api-1bb87811fd1d
-// THANK YOU SHUAIB AFEGBUA
 
 // ignore_for_file: invalid_return_type_for_catch_error
 

@@ -11,7 +11,8 @@ class API {
     'Content-Type': 'application/json; charset=UTF-8',
   };
 
-  static const String baseURL = '10.0.2.2:3001';
+  // static const String baseURL = '10.0.2.2:3001';
+  static const String baseURL = '192.168.1.66:3001';
   static const String signup = 'api/register';
   static const String login = 'api/login';
   static const String verify = 'api/account/verify';

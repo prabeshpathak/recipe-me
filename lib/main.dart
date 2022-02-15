@@ -1,13 +1,13 @@
 import 'package:recipe_app_flutter/screens/home.dart';
-import 'package:recipe_app_flutter/screens/landing.dart';
+import 'package:recipe_app_flutter/screens/mainLanding.dart';
 import 'package:recipe_app_flutter/screens/login.dart';
 import 'package:recipe_app_flutter/screens/signup.dart';
 import 'package:recipe_app_flutter/screens/forgotPassword.dart';
 import 'package:recipe_app_flutter/screens/verification.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
-import 'package:recipe_app_flutter/utils/IngredientModel.dart';
+import 'package:recipe_app_flutter/utils/IngredientModelMethods.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
-import 'package:recipe_app_flutter/utils/UserPreference.dart';
+import 'package:recipe_app_flutter/utils/LocalUserPreference.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

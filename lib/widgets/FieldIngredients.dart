@@ -1,41 +1,64 @@
+import 'package:recipe_app_flutter/models/Ingredient.dart';
+import 'package:recipe_app_flutter/utils/BaseAPI.dart';
+import 'package:recipe_app_flutter/utils/UserProvider.dart';
+import 'package:recipe_app_flutter/utils/maxString.dart';
 import 'package:recipe_app_flutter/widgets/TextPill.dart';
-import 'package:recipe_app_flutter/utils/StringCap.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TagFieldController {
-  Set<String> list = Set();
+class IngredientFieldController {
+  Set<Ingredient> list = Set();
 
   void clear() {
     list.clear();
   }
 }
 
-class TagField extends StatefulWidget {
-  final TagFieldController controller;
-  TagField({required this.controller});
+class IngredientField extends StatefulWidget {
+  final IngredientFieldController controller;
+  IngredientField({required this.controller});
 
   @override
-  TagFieldState createState() => TagFieldState();
+  IngredientFieldState createState() => IngredientFieldState();
 }
 
-class TagFieldState extends State<TagField> {
-  final TextEditingController _tag = TextEditingController();
+class IngredientFieldState extends State<IngredientField> {
+  final TextEditingController _ingredient = TextEditingController();
 
   Widget _buildTextField() {
     return TextFormField(
         keyboardType: TextInputType.text,
-        maxLength: 16,
-        controller: _tag,
+        maxLength: 32,
+        controller: _ingredient,
         // textInputAction: TextInputAction.next,
         decoration: const InputDecoration(
-          hintText: 'Enter a tag',
+          hintText: 'Enter an ingredient',
           border: OutlineInputBorder(),
           contentPadding: EdgeInsets.only(left: 15.0),
         ));
   }
 
+  void addIngredient(String token, String name) async {
+    Ingredient i;
+
+    List<Ingredient> fetchedIngredients =
+        await API().getIngredients(token, name);
+    if (fetchedIngredients.length == 0) {
+      var response = await API().submitIngredient(token, name);
+      i = Ingredient.fromJson(response);
+    } else {
+      i = fetchedIngredients[0];
+    }
+
+    setState(() {
+      widget.controller.list.add(i);
+      _ingredient.clear();
+    });
+  }
+
   @override
-  build(BuildContext context) {
+  Widget build(BuildContext context) {
+    String token = Provider.of<UserProvider>(context).user.token;
     return Container(
       child: Column(children: [
         Row(
@@ -46,22 +69,13 @@ class TagFieldState extends State<TagField> {
               IconButton(
                 icon: Icon(
                   Icons.add,
-                  color: widget.controller.list.length < 3
-                      ? Colors.grey
-                      : Colors.black,
                 ),
                 tooltip: 'Add the selected tag',
                 onPressed: () {
-                  String text = _tag.text.trim();
-
+                  String text = _ingredient.text.trim();
                   if (text.length != 0) {
-                    setState(() {
-                      if (widget.controller.list.length < 3) {
-                        widget.controller.list
-                            .add(_tag.text.trim().capitalizeFirstofEach);
-                        _tag.clear();
-                      }
-                    });
+                    addIngredient(token, text.capitalizeFirstofEach);
+                    _ingredient.clear();
                   }
                 },
               )
@@ -75,10 +89,10 @@ class TagFieldState extends State<TagField> {
                       runSpacing: -10,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        TextPill(item),
+                        TextPill(item.name),
                         IconButton(
                           icon: const Icon(Icons.remove),
-                          tooltip: 'Remove this tag',
+                          tooltip: 'Remove this ingredient',
                           onPressed: () {
                             setState(() {
                               widget.controller.list.remove(item);

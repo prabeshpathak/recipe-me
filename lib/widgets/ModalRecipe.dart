@@ -1,9 +1,9 @@
 
 import 'package:recipe_app_flutter/models/Recipe.dart';
 import 'package:recipe_app_flutter/models/User.dart';
-import 'package:recipe_app_flutter/utils/API.dart';
+import 'package:recipe_app_flutter/utils/BaseAPI.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
-import 'package:recipe_app_flutter/widgets/LikeButton.dart';
+import 'package:recipe_app_flutter/widgets/ButtonLike.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

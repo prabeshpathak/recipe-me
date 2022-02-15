@@ -8,10 +8,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:recipe_app_flutter/models/User.dart';
-import 'package:recipe_app_flutter/utils/API.dart';
+import 'package:recipe_app_flutter/utils/BaseAPI.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:recipe_app_flutter/utils/UserPreference.dart';
+import 'package:recipe_app_flutter/utils/LocalUserPreference.dart';
 
 enum Status {
   // _verificationStatus

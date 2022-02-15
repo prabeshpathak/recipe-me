@@ -1,6 +1,6 @@
 import 'package:recipe_app_flutter/models/User.dart';
-import 'package:recipe_app_flutter/screens/landing.dart';
-import 'package:recipe_app_flutter/utils/API.dart';
+import 'package:recipe_app_flutter/screens/mainLanding.dart';
+import 'package:recipe_app_flutter/utils/BaseAPI.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
 import 'package:recipe_app_flutter/utils/RouteNames.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';

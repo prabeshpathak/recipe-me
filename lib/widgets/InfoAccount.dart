@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:recipe_app_flutter/utils/API.dart';
+import 'package:recipe_app_flutter/utils/BaseAPI.dart';
 import 'package:recipe_app_flutter/utils/AuthProvider.dart';
 import 'package:recipe_app_flutter/utils/RouteNames.dart';
 import 'package:recipe_app_flutter/utils/UserProvider.dart';
@@ -51,7 +51,7 @@ class AccountInfoState extends State<AccountInfo> {
     _streamSubscriptions.add(
       accelerometerEvents.listen(
         (AccelerometerEvent event) {
-          if (event.x > 7) {
+          if (event.x > 12) {
             // logout user
             AuthProvider auth =
                 Provider.of<AuthProvider>(context, listen: false);

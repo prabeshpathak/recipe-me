@@ -55,7 +55,7 @@ void main() {
     );  
   });
 
-  group('equality', () {
+  group('Equality', () {
     test(
       'GIVEN two user models '
       'WHEN properties are different '

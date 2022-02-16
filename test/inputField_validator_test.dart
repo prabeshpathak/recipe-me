@@ -10,7 +10,7 @@ void main() {
       var result2 = "abbb@.com".isValidEmail();
       expect(result2, false);
     });
-
+    
     test("Test for valid Username for Login or Register", () {
       var result = "thisisnew_a".isValidName();
       expect(result, true);

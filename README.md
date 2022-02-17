@@ -1,16 +1,26 @@
-# recipe_app_flutter
+# Recipe-Me
 
-A new Flutter project.
+App to Share your Recipe to the world
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+Recipe-Me requires [Flutter](https://flutter.dev/) V2.10+ to run.
 
-A few resources to get you started if this is your first Flutter project:
+Install the dependencies.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```sh
+Flutter pub get
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Starting Server
+
+```sh
+   cd server && node server.js
+
+```
+
+## Using Released Version
+
+Download the lastes release from [here](https://github.com/softwarica-github/final-assignment-android-application-development-prabeshpathak/releases/).
+
+## _Make Sure Server is Running and You are all good to go!_

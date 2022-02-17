@@ -19,7 +19,6 @@ Using MongoDB URL
  - Hit Save Now the file is an . env file. You can also check the file type in File Explorer to confirm.
 ```sh
    MONGO_URL="Your MongoDB URL"
-    
 ```
 
 All Good now, Start the server

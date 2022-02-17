@@ -32,7 +32,7 @@ logger.errorLogging(app);
 
 // Begin our connection to the configured database
 mongoose
-  .connect("mongodb+srv://prabesh:youknowwhoiam@cluster0.btht8.mongodb.net/recipeme?retryWrites=true&w=majority", {
+  .connect(MONGO_URI, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,

@@ -50,12 +50,6 @@ Map<int, Color> color = {
   900: Color.fromRGBO(13, 15, 16, 1),
 };
 
-void getnn() async {
-  final pref = await SharedPreferences.getInstance();
-  final String? user = pref.getString('userId');
-  print(user);
-}
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -91,8 +85,7 @@ class MyApp extends StatelessWidget {
                       if (snapshot.hasError) {
                         return Text('Error: ${snapshot.error}');
                       } else if ((snapshot.data?.token ?? 'null') == 'null') {
-                        print('here');
-                        getnn();
+                        
                         UserPreference().removeUser();
                         return Landing();
                       } else {

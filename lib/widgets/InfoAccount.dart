@@ -21,8 +21,8 @@ sendNotification() {
       content: NotificationContent(
     id: 4,
     channelKey: 'recipeme',
-    title: 'Successfully Logged In',
-    body: 'Welcome here, You are now logged in.',
+    title: 'Successfully Logged Out',
+    body: 'Hope to See you soon.',
   ));
 }
 
@@ -48,9 +48,10 @@ class AccountInfoState extends State<AccountInfo> {
   void initState() {
     super.initState();
     _streamSubscriptions.add(
-      accelerometerEvents.listen(
-        (AccelerometerEvent event) {
-          if (event.x > 10) {
+      userAccelerometerEvents.listen(
+        (UserAccelerometerEvent event) {
+            print(event.x);
+          if (event.x > 35) {
             // logout user
             AuthProvider auth =
                 Provider.of<AuthProvider>(context, listen: false);

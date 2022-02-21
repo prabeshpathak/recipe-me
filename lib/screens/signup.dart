@@ -223,6 +223,7 @@ class Signup extends StatelessWidget {
     // and the scaffold allows for use of objects such as drawers.
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           // Background image. I'm a bit annoyed how each screen reloads it.
           // Bounty for whoever can fix that

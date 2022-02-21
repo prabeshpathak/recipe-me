@@ -14,7 +14,6 @@ class UserPreference {
     await prefs.setString('name', user.name);
     await prefs.setBool('verified', user.verified);
 
-    print(prefs.containsKey('userId'));
     return await prefs.setString('token', user.token);
   }
 
@@ -25,7 +24,6 @@ class UserPreference {
     final String name = prefs.getString('name') ?? 'null';
     final String token = prefs.getString('token') ?? 'null';
     final bool verified = prefs.getBool('verified') ?? false;
-    print(prefs.containsKey('userId'));
     return User(userId: userId, name: name, token: token, verified: verified);
   }
 

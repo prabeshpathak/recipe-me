@@ -21,6 +21,6 @@ Starting Server
 
 ## Using Released Version
 
-Download the lastes release from [here](https://github.com/softwarica-github/final-assignment-android-application-development-prabeshpathak/releases/).
+Download the lastes release from [here](https://github.com/prabeshpathak/recipe-me/releases/).
 
 ## _Make Sure Server is Running and You are all good to go!_
